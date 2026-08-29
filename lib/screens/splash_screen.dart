@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/asset_path.dart';
+import '../widgets/screen_bg.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -14,12 +15,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          SvgPicture.asset(AssetPath.bgSVG),
-        ],
-      ),
+      body: ScreenBG(child: Center(child: Image.asset(AssetPath.logoPNG,width: 300, height: 300,))),
 
     );
   }
 }
+
