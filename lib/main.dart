@@ -12,7 +12,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      theme: ThemeData(
+        textTheme: TextTheme(
+          titleLarge: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+
+        inputDecorationTheme: InputDecorationTheme(
+          fillColor: Colors.white,
+          filled: true,
+          hintStyle: TextStyle(
+            color: Colors.grey,
+          ),
+        ),
+      ),
 
       home: SplashScreen(),
     );
