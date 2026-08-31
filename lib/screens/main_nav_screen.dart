@@ -23,6 +23,25 @@ class _MainNavScreenState extends State<MainNavScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+
+      body:screens[selectedIndex],
+
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: selectedIndex,
+          onDestinationSelected: (int index){
+            selectedIndex = index;
+            setState(() {
+            });
+          },
+
+
+          destinations: [
+        NavigationDestination(icon: Icon(Icons.add_task), label: 'New'),
+        NavigationDestination(icon: Icon(Icons.task), label: 'Progress'),
+        NavigationDestination(icon: Icon(Icons.task_alt), label: 'Completed'),
+        NavigationDestination(icon: Icon(Icons.cancel), label: 'Canceled'),
+      ]),
+    );
   }
 }
