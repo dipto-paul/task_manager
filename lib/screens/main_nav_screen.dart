@@ -25,10 +25,22 @@ class _MainNavScreenState extends State<MainNavScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
 
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage:NetworkImage('https://avatars.githubusercontent.com/u/136964133?v=4'),
+            )
+          ],
+        ),
+      ),
+
       body:screens[selectedIndex],
 
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex,
+          indicatorColor: Colors.green,
           onDestinationSelected: (int index){
             selectedIndex = index;
             setState(() {
