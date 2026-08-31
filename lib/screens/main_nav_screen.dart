@@ -30,7 +30,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage:NetworkImage('https://avatars.githubusercontent.com/u/136964133?v=4'),
+              backgroundImage:NetworkImage('https://scontent.fdac177-2.fna.fbcdn.net/v/t39.30808-6/776640727_1607274110991784_7110676742696664943_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s960x960&_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=JxHILUxy_-AQ7kNvwH54OZ-&_nc_oc=Adq8NsfaiU8wdX-ZuY88SMQCNh2BiXWbqM-loP2hwiNhESa29xL4MsBRG-5K9MSLnis&_nc_zt=23&_nc_ht=scontent.fdac177-2.fna&_nc_gid=tjqtXvZ472jrR9XnBnttxQ&_nc_ss=7b2a8&oh=00_AQKSmOjPCCgEqMrstGfvaP1BKas5FcRv1-QIaKTBEKlwCw&oe=6A9BADF0'),
             )
           ],
         ),
