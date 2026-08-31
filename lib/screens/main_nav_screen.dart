@@ -30,7 +30,23 @@ class _MainNavScreenState extends State<MainNavScreen> {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage:NetworkImage('https://scontent.fdac177-2.fna.fbcdn.net/v/t39.30808-6/776640727_1607274110991784_7110676742696664943_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s960x960&_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=JxHILUxy_-AQ7kNvwH54OZ-&_nc_oc=Adq8NsfaiU8wdX-ZuY88SMQCNh2BiXWbqM-loP2hwiNhESa29xL4MsBRG-5K9MSLnis&_nc_zt=23&_nc_ht=scontent.fdac177-2.fna&_nc_gid=tjqtXvZ472jrR9XnBnttxQ&_nc_ss=7b2a8&oh=00_AQKSmOjPCCgEqMrstGfvaP1BKas5FcRv1-QIaKTBEKlwCw&oe=6A9BADF0'),
+              radius: 22,
+              backgroundImage: NetworkImage('https://scontent.fdac177-2.fna.fbcdn.net/v/t39.30808-1/776640727_1607274110991784_7110676742696664943_n.jpg?stp=dst-jpg_tt6&cstp=mx960x960&ctp=s480x480&_nc_cat=105&ccb=1-7&_nc_sid=e99d92&_nc_ohc=JxHILUxy_-AQ7kNvwFPAlJF&_nc_oc=AdpNF4k1Znlr4zkvNausP72hFH7jXllq_ivV3VXr3Dn0vbkXfHA620pUgsDxvyvIPgA&_nc_zt=24&_nc_ht=scontent.fdac177-2.fna&_nc_gid=Zf76fkEOOBS3I41fdGKBbw&_nc_ss=7b2a8&oh=00_AQI68VvPFZ5Gh_e6tZInl3XYxRKJnD5iRaHgMhtsyP4OXg&oe=6A9B966E'),
+              onBackgroundImageError: (exception, stackTrace) {
+                print("Image load error: $exception");
+              },
+            ),
+            SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Dipto Paul", style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Colors.white,
+                ),),
+                Text("diptopaul.contact@gmail.com", style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Colors.white,
+                ),)
+              ],
             )
           ],
         ),
