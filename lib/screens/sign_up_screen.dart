@@ -1,7 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager/screens/login_screen.dart';
+import 'package:task_manager/service/api_caller.dart';
+import 'package:task_manager/utils/urls.dart';
 import 'package:task_manager/widgets/screen_bg.dart';
+
+import '../models/api_response.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -19,8 +23,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  onTapSignIn(){ // Recognizer add korar jonno
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+  onTapSignIn() async { // Recognizer add korar jonno
+    final ApiResponse response = await ApiCaller.postRequest(url: TMUrls.SignUpURL,
+    body: {
+      "email": emailController.text,
+      "firstName": firstNameController.text,
+      "lastName": lastNameController.text,
+      "mobile": mobileController.text,
+      "password": passwordController.text,
+    },
+    );
+
+    if(response.isSuccess){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+    }
   }
 
   @override
@@ -124,7 +140,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SizedBox(height: 20,),
 
-              FilledButton(onPressed: (){}, child: Icon(Icons.arrow_forward_ios)),
+              FilledButton(onPressed: (){
+                onTapSignIn();
+              }, child: Icon(Icons.arrow_forward_ios)),
               SizedBox(height: 50,),
 
               Center(
