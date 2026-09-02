@@ -12,6 +12,8 @@ class LoginScreen extends StatefulWidget {
 }
 class _LoginScreenState extends State<LoginScreen> {
 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   onTapSignUp(){ // Recognizer add korar jonno
     Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUpScreen()));
   }
@@ -21,55 +23,77 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: ScreenBG(child: Padding(
         padding: const EdgeInsets.all(35.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 180,),
-            Text('Get Started With', style: Theme.of(context).textTheme.titleLarge,),
-            SizedBox(height: 20,),
-            TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Email',
-                prefixIcon: Icon(Icons.email),
+        child: Form(
+          key: formKey, // eita validator use er jonno
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 180,),
+              Text('Get Started With', style: Theme.of(context).textTheme.titleLarge,),
+              SizedBox(height: 20,),
+              TextFormField(
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  prefixIcon: Icon(Icons.email),
+                ),
+
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return 'Email is required';
+                  }else{
+                    return null;
+                  }
+                },
               ),
-            ),
-            SizedBox(height: 10,),
-            TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: 'Password',
-                prefixIcon: Icon(Icons.password),
+              SizedBox(height: 10,),
+              TextFormField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  prefixIcon: Icon(Icons.password),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Please enter your password";
+                  }
+
+                  if (value.length < 6) {
+                    return "Password must be at least 6 characters";
+                  }
+
+                  return null;
+                },
               ),
-            ),
-            SizedBox(height: 20,),
+              SizedBox(height: 20,),
 
-            FilledButton(onPressed: (){
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MainNavScreen()));
-            }, child: Icon(Icons.arrow_forward_ios)),
-            SizedBox(height: 50,),
+              FilledButton(onPressed: (){
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MainNavScreen()));
+              }, child: Icon(Icons.arrow_forward_ios)),
+              SizedBox(height: 50,),
 
-            Center(
-              child: Column(
-                children: [
-                  TextButton(onPressed: (){},
-                      child: Text('Forget Password ?', style: TextStyle(color: Colors.grey),)
-                  ),
-                  RichText(text: TextSpan(
-                      text:"Don't have Account ?", style: TextStyle(color: Colors.black),
-                    children: [
-                      TextSpan(
-                        text: "Sign Up", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+              Center(
+                child: Column(
+                  children: [
+                    TextButton(onPressed: (){},
+                        child: Text('Forget Password ?', style: TextStyle(color: Colors.grey),)
+                    ),
+                    RichText(text: TextSpan(
+                        text:"Don't have Account ?", style: TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                          text: "Sign Up", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
 
-                        recognizer: TapGestureRecognizer()..onTap = onTapSignUp,// text ke clickable korar jonno
-                      ),
-                    ]
-                  ),
-                  ),
+                          recognizer: TapGestureRecognizer()..onTap = onTapSignUp,// text ke clickable korar jonno
+                        ),
+                      ]
+                    ),
+                    ),
 
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       )),
     );

@@ -37,41 +37,90 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Text('Join With Us', style: Theme.of(context).textTheme.titleLarge,),
               SizedBox(height: 20,),
               TextFormField(
+                controller: emailController,
                 decoration: InputDecoration(
                   hintText: 'Email',
                   prefixIcon: Icon(Icons.email),
                 ),
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return 'Email is required';
+                  }else{
+                    return null;
+                  }
+                },
+
               ),
               SizedBox(height: 10,),
 
               TextFormField(
+                controller: firstNameController,
                 decoration: InputDecoration(
                   hintText: 'First Name',
                   prefixIcon: Icon(Icons.drive_file_rename_outline),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter your first name";
+                  }
+
+                  return null;
+                },
               ),
               SizedBox(height: 10,),
               TextFormField(
+                controller: lastNameController,
                 decoration: InputDecoration(
                   hintText: 'Last Name',
                   prefixIcon: Icon(Icons.drive_file_rename_outline),
                 ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Please enter your last name";
+                  }
+
+                  return null;
+                },
               ),
               SizedBox(height: 10,),
               TextFormField(
+                controller: mobileController,
                 decoration: InputDecoration(
                   hintText: 'Mobile',
                   prefixIcon: Icon(Icons.call),
                 ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Please enter your mobile number";
+                  }
+
+                  if (value.length != 11) {
+                    return "Mobile number must be 11 digits";
+                  }
+
+                  return null;
+                },
               ),
               SizedBox(height: 10,),
 
               TextFormField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Password',
                   prefixIcon: Icon(Icons.password),
                 ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Please enter your password";
+                  }
+
+                  if (value.length < 6) {
+                    return "Password must be at least 6 characters";
+                  }
+
+                  return null;
+                },
               ),
               SizedBox(height: 20,),
 
