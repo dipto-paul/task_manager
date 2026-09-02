@@ -34,6 +34,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     },
     );
 
+
+
     if(response.isSuccess){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
     }
