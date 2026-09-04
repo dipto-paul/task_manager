@@ -15,6 +15,10 @@ class SignUpScreen extends StatefulWidget {
 }
 class _SignUpScreenState extends State<SignUpScreen> {
 
+  onTapSignin(){
+    Navigator.pop(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+  }
+
   TextEditingController emailController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -23,7 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  onTapSignIn() async { // Recognizer add korar jonno
+  onTapSignIn() async {
     final ApiResponse response = await ApiCaller.postRequest(url: TMUrls.SignUpURL,
     body: {
       "email": emailController.text,
@@ -33,8 +37,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       "password": passwordController.text,
     },
     );
-
-
 
     if(response.isSuccess){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
@@ -156,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           TextSpan(
                             text: "Sign In", style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-                            recognizer: TapGestureRecognizer()..onTap = onTapSignIn,
+                            recognizer: TapGestureRecognizer()..onTap = onTapSignin,
                           ),
                         ]
                     ),
