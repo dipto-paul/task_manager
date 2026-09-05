@@ -20,7 +20,7 @@ class AuthController {
   }
 
 
-  static Future getUserData(UserModel model, String token) async {
+  static Future getUserData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     String? token = sharedPreferences.getString('token');

@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 20,),
 
-              FilledButton(onPressed: (){
+              FilledButton(onPressed: ()async{
                 final ApiResponse response = await ApiCaller.postRequest(url: TMUrls.LoginURL,
                   body: {
                     "email": emailController.text,
