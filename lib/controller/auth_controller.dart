@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
 
 class AuthController {
-  static String? token;
+  static String? Usertoken;
   static UserModel? userData;
 
   static Future saveUserData(UserModel model, String token) async {
@@ -15,7 +15,7 @@ class AuthController {
     sharedPreferences.setString('token', token);
     sharedPreferences.setString('user_data', jsonEncode(model.toJson()));
 
-    token = token;
+    Usertoken = token;
     userData = model;
   }
 
@@ -26,7 +26,7 @@ class AuthController {
     String? token = sharedPreferences.getString('token');
 
     if(token !=null ){
-      token = token;
+      Usertoken = token;
     }
 
     String? user = sharedPreferences.getString('user_data');
