@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:task_manager/models/api_response.dart';
+import 'package:task_manager/models/task_status_count_model.dart';
+import '../service/api_caller.dart';
 import '../widgets/task_card_count.dart';
 import '../widgets/task_card.dart';
+import '../utils/urls.dart';
 
 class NewTaskScreen extends StatefulWidget {
   const NewTaskScreen({super.key});
@@ -11,6 +14,16 @@ class NewTaskScreen extends StatefulWidget {
 }
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
+  List<TaskStatusCountModel> taskCountByStatus = [];
+
+  Future<void> getAllTaskCount()async {
+    final ApiResponse response = await ApiCaller.getRequest(url: TMUrls.taskStatusCountURL);
+
+    List<TaskStatusCountModel> taskCount = [];
+
+    if(response.isSuccess)
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
