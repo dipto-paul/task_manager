@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:task_manager/models/api_response.dart';
-import 'package:task_manager/models/task_status_count_model.dart';
+import '../models/api_response.dart';
+import '../models/task_model.dart';
+import '../models/task_status_count_model.dart';
 import '../service/api_caller.dart';
-import '../widgets/task_card_count.dart';
-import '../widgets/task_card.dart';
 import '../utils/urls.dart';
+import 'package:flutter/material.dart';
 
+import '../widgets/task_card.dart';
+import '../widgets/task_card_count.dart';
+import 'add_task_screen.dart';
 class NewTaskScreen extends StatefulWidget {
   const NewTaskScreen({super.key});
 
@@ -14,50 +16,57 @@ class NewTaskScreen extends StatefulWidget {
 }
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getAllTaskCount();
+    getTask('New');
   }
+
+
   List<TaskStatusCountModel> taskCountByStatus = [];
-  List<TaskStatusCountModel> taskList = [];
+  List<TaskModel> taskList = [];
 
-  Future<void> getAllTaskCount()async {
-    final ApiResponse response = await ApiCaller.getRequest(url: TMUrls.taskStatusCountURL);
+  Future <void> getTask(String status) async {
+    final ApiResponse response= await ApiCaller.getRequest(url: TMUrls.taskListByStatusURL(status));
 
-    List<TaskStatusCountModel> taskCount = [];
+    List<TaskModel> tList= [];
 
     if(response.isSuccess){
-      for(Map<String, dynamic>jsonData in response.responseData['data']){
-        taskCount.add(TaskStatusCountModel.fromJson(jsonData));
+      for(Map<String,dynamic>jsonData in response.responseData['data']){
+        tList.add(TaskModel.fromJson(jsonData));
       }
     }else{
-      ScaffoldMessenger.of(context).showSnackBar((SnackBar(content: Text(response.responseData['data']),)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.responseData['data'])));
+
     }
 
     setState(() {
-      taskCountByStatus = taskCount;
+      taskList = tList;
     });
+
   }
 
-  Future<void> getTask(String status)async {
-    final ApiResponse response = await ApiCaller.getRequest(url: TMUrls.taskStatusCountURL);
 
-    List<TaskStatusCountModel> taskCount = [];
+  Future <void> getAllTaskCount() async {
+    final ApiResponse response= await ApiCaller.getRequest(url: TMUrls.taskStatusCountURL);
+
+    List<TaskStatusCountModel> taskCount= [];
 
     if(response.isSuccess){
-      for(Map<String, dynamic>jsonData in response.responseData['data']){
+      for(Map<String,dynamic>jsonData in response.responseData['data']){
         taskCount.add(TaskStatusCountModel.fromJson(jsonData));
       }
     }else{
-      ScaffoldMessenger.of(context).showSnackBar((SnackBar(content: Text(response.responseData['data']),)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.responseData['data'])));
+
     }
 
     setState(() {
       taskCountByStatus = taskCount;
     });
+
   }
 
 
@@ -67,40 +76,50 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
       backgroundColor: Colors.grey.shade200,
       body: Column(
         children: [
-          const SizedBox(height: 20),
-
           SizedBox(
             height: 100,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
               itemCount: taskCountByStatus.length,
-
-              itemBuilder: (context, index) {
+              itemBuilder: (context,index){
                 return SizedBox(
-                  width: 87.5,
-                  child: TaskCardCount(
-                    title: taskCountByStatus[index].sId.toString(),
-                    count: taskCountByStatus[index].sum!.toInt(),
-                  ),
-                );
+                    width: 100,
+                    child: TaskCardCount(title: taskCountByStatus[index].sId.toString(),
+                      count: taskCountByStatus[index].sum!.toInt(),));
               },
-              separatorBuilder: (context, index) {
-                return const SizedBox(width: 10);
+
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(width: 5,);
               },
+
+
+
+
             ),
           ),
 
-          Expanded(child: ListView.builder(
-            itemCount: 20,
-              itemBuilder: (context, index){
-                return TaskCard();
-              }
+          Expanded(
+            child: ListView.builder(
 
-          )
+                itemCount: taskList.length,
+                itemBuilder: (context,index){
+                  return TaskCard(taskModel: taskList[index], cardColor: Colors.blue, refreshParent: () {
+                    getAllTaskCount();
+                    getTask('New');
+                    setState(() {
+
+                    });
+                  },);
+                }
+
+
+            ),
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>AddNewTaskScreen()));
+      },child: Icon(Icons.add),),
     );
   }
 }
