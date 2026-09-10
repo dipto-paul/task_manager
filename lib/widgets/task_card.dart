@@ -134,7 +134,7 @@ class _TaskCardState extends State<TaskCard> {
 
                 IconButton(onPressed: (){
                   showChangeStatusDialog();
-                },icon: Icon(Icons.edit_note,color: Colors.orange,),),
+                },icon: Icon(Icons.edit,color: Colors.orange,),),
                 IconButton(onPressed: (){
                   deleteTask();
                 },icon: Icon(Icons.delete,color: Colors.red,),),
