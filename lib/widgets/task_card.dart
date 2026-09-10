@@ -1,7 +1,7 @@
-import 'package:batch_18/module_10/CRUD/utils/urls.dart';
-import 'package:batch_18/task_manager/models/api_response.dart';
-import 'package:batch_18/task_manager/models/task_model.dart';
-import 'package:batch_18/task_manager/service/api_caller.dart';
+import '../utils/urls.dart';
+import '../models/api_response.dart';
+import '../models/task_model.dart';
+import '../service/api_caller.dart';
 import '../utils/urls.dart';
 import 'package:flutter/material.dart';
 class TaskCard extends StatefulWidget {
