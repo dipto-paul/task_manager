@@ -135,7 +135,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return "Please enter your password";
                   }
 
-                  if (value.length < 6) {
+                  if (value.length < 4) {
                     return "Password must be at least 6 characters";
                   }
 
