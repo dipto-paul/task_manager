@@ -72,7 +72,6 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
             }, child: Icon(Icons.arrow_forward_ios_sharp,size: 20,)),
 
           ],
-
         ),
       )),
     );
