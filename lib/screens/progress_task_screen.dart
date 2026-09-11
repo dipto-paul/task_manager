@@ -73,6 +73,7 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
         child: CircularProgressIndicator(
           color: Colors.green,
           backgroundColor: Colors.grey,
+          strokeWidth: 7,
         ),
       )
 

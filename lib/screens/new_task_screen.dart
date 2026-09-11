@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../widgets/task_card.dart';
 import '../widgets/task_card_count.dart';
 import 'add_task_screen.dart';
+
 class NewTaskScreen extends StatefulWidget {
   const NewTaskScreen({super.key});
 
@@ -16,110 +17,166 @@ class NewTaskScreen extends StatefulWidget {
 }
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getAllTaskCount();
-    getTask('New');
-  }
 
+  bool isLoading = true;
 
   List<TaskStatusCountModel> taskCountByStatus = [];
   List<TaskModel> taskList = [];
 
-  Future <void> getTask(String status) async {
-    final ApiResponse response= await ApiCaller.getRequest(url: TMUrls.taskListByStatusURL(status));
+  @override
+  void initState() {
+    super.initState();
 
-    List<TaskModel> tList= [];
+    getAllTaskCount();
+    getTask('New');
+  }
 
-    if(response.isSuccess){
-      for(Map<String,dynamic>jsonData in response.responseData['data']){
+  Future<void> getTask(String status) async {
+
+    final ApiResponse response = await ApiCaller.getRequest(
+      url: TMUrls.taskListByStatusURL(status),
+    );
+
+    List<TaskModel> tList = [];
+
+    if (response.isSuccess) {
+
+      for (Map<String, dynamic> jsonData
+      in response.responseData['data']) {
         tList.add(TaskModel.fromJson(jsonData));
       }
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.responseData['data'])));
 
-    }
+    } else {
 
-    setState(() {
-      taskList = tList;
-    });
-
-  }
-
-
-  Future <void> getAllTaskCount() async {
-    final ApiResponse response= await ApiCaller.getRequest(url: TMUrls.taskStatusCountURL);
-
-    List<TaskStatusCountModel> taskCount= [];
-
-    if(response.isSuccess){
-      for(Map<String,dynamic>jsonData in response.responseData['data']){
-        taskCount.add(TaskStatusCountModel.fromJson(jsonData));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              response.responseData['data'].toString(),
+            ),
+          ),
+        );
       }
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.responseData['data'])));
-
     }
 
-    setState(() {
-      taskCountByStatus = taskCount;
-    });
-
+    if (mounted) {
+      setState(() {
+        taskList = tList;
+        isLoading = false;
+      });
+    }
   }
 
+  Future<void> getAllTaskCount() async {
+
+    final ApiResponse response = await ApiCaller.getRequest(
+      url: TMUrls.taskStatusCountURL,
+    );
+
+    List<TaskStatusCountModel> taskCount = [];
+
+    if (response.isSuccess) {
+
+      for (Map<String, dynamic> jsonData
+      in response.responseData['data']) {
+        taskCount.add(
+          TaskStatusCountModel.fromJson(jsonData),
+        );
+      }
+
+    } else {
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              response.responseData['data'].toString(),
+            ),
+          ),
+        );
+      }
+    }
+
+    if (mounted) {
+      setState(() {
+        taskCountByStatus = taskCount;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      body: Column(
+
+      body: isLoading ? const Center(
+        child: CircularProgressIndicator(
+          color: Colors.green,
+          backgroundColor: Colors.grey,
+          strokeWidth: 7,
+        ),
+      ) : Column(
         children: [
+
           SizedBox(
             height: 100,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: taskCountByStatus.length,
-              itemBuilder: (context,index){
+
+              itemBuilder: (context, index) {
                 return SizedBox(
-                    width: 100,
-                    child: TaskCardCount(title: taskCountByStatus[index].sId.toString(),
-                      count: taskCountByStatus[index].sum!.toInt(),));
+                  width: 100,
+                  child: TaskCardCount(
+                    title: taskCountByStatus[index]
+                        .sId
+                        .toString(),
+
+                    count: taskCountByStatus[index]
+                        .sum!
+                        .toInt(),
+                  ),
+                );
               },
 
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(width: 5,);
+              separatorBuilder:
+                  (BuildContext context, int index) {
+                return const SizedBox(width: 5);
               },
-
-
-
-
             ),
           ),
 
           Expanded(
             child: ListView.builder(
+              itemCount: taskList.length,
 
-                itemCount: taskList.length,
-                itemBuilder: (context,index){
-                  return TaskCard(taskModel: taskList[index], cardColor: Colors.blue, refreshParent: () {
+              itemBuilder: (context, index) {
+                return TaskCard(
+                  taskModel: taskList[index],
+                  cardColor: Colors.blue,
+
+                  refreshParent: () {
                     getAllTaskCount();
                     getTask('New');
-                    setState(() {
-
-                    });
-                  },);
-                }
-
-
+                  },
+                );
+              },
             ),
-          )
+          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>AddNewTaskScreen()));
-      },child: Icon(Icons.add),),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddNewTaskScreen(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

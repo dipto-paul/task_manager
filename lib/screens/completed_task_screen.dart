@@ -74,7 +74,11 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
       body: isLoading
 
           ? const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          color: Colors.green,
+          backgroundColor: Colors.grey,
+          strokeWidth: 7,
+        ),
       )
 
           : ListView.builder(
