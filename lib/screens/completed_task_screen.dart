@@ -39,6 +39,8 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
 
     if (response.isSuccess) {
 
+
+
       for (Map<String, dynamic> jsonData
       in response.responseData['data']) {
         tList.add(TaskModel.fromJson(jsonData));
