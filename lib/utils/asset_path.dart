@@ -3,4 +3,5 @@ class AssetPath {
   static String bgSVG = '$imagePath/background.svg';
   static String logoPNG = '$imagePath/logo.png';
 
+
 }
