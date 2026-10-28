@@ -23,6 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
     moveToNextScreen();
   }
 
+
+
   Future moveToNextScreen () async {
     await Future.delayed(Duration(seconds: 3));
     AuthController.getUserData();
