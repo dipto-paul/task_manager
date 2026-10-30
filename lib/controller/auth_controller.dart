@@ -15,6 +15,7 @@ class AuthController {
     sharedPreferences.setString('user_data', jsonEncode(model.toJson()));
 
     Usertoken = token;
+
     userData = model;
 
   }
